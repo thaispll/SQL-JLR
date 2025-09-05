@@ -116,7 +116,45 @@ INSERT INTO Historico (MAT, COD_DISC, COD_TURMA, COD_PROF, ANO, frequencia, nota
 (2015010106, 'WEB', 1, 192011, 2015, 87, 7.5),
 (2015010106, 'ENG', 1, 122135, 2015, 90, 7.0);
 
-/* Encontre a MAT dos alunos com nota em BD em 2015 
+/*a) Encontre a MAT dos alunos com nota em BD em 2015 
 menor que 5 (obs: BD =
 código da disciplinas).*/
+SELECT * FROM Historico;
+SELECT DISTINCT MAT 
+FROM Historico
+WHERE cod_disc = 'BD' AND ano= 2015 AND nota <5;
 
+/*Encontre a MAT e calcule a média das notas dos alunos na 
+disciplina de POO
+em 2015*/
+
+
+SELECT MAT, AVG(nota) AS media_nota
+FROM Historico
+WHERE cod_disc = 'POO' AND ano = 2015
+GROUP BY MAT;
+
+/* c) Encontre a MAT e calcule a média das notas dos alunos na 
+disciplina de POO em 2015 e que esta média seja superior a 6.
+*/
+SELECT MAT, AVG(nota) AS media_nota
+FROM Historico
+WHERE cod_disc = 'POO' AND ano = 2015
+GROUP BY MAT
+HAVING AVG(nota) >6; /*FILTRAR*/
+
+SELECT * FROM alunos;
+/*d) Encontre quantos alunos não são de Natal.*/
+
+/* COUNT*/
+SELECT COUNT(*) AS quantidade_alunos_fora_natal
+FROM alunos 
+WHERE cidade <> 'NATAL';
+
+/*1.	Liste os nomes dos alunos que tiraram nota maior que 7 na disciplina "ENG" em 2015. */
+SELECT Alunos.nome
+FROM Alunos
+JOIN Historico ON Alunos.mat = Historico. mat
+WHERE Historico.cod_disc = 'ENG'
+	AND Historico.ano = 2015
+    AND Historico.nota > 7;
